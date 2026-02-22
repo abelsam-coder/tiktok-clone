@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fadeIn: "fadeIn 1.5s ease-in-out",
+            slideUp: "slideUp 1.2s ease-out",
+          },
+          keyframes: {
+            fadeIn: {
+              "0%": { opacity: 0 },
+              "100%": { opacity: 1 }
+            },
+            slideUp: {
+              "0%": { opacity: 0, transform: "translateY(40px)" },
+              "100%": { opacity: 1, transform: "translateY(0)" }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <title>IT Assignment</title>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden">
+
+  <!-- Background Gradient Glow -->
+  <div class="absolute w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+  <div class="absolute w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30 bottom-10 right-10 animate-pulse"></div>
+
+  <!-- Navbar -->
+  <header class="flex justify-between items-center p-6 relative z-10 animate-fadeIn">
+    <h1 class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
+      TikTok
+    </h1>
+    <!-- <nav class="space-x-6 text-gray-300">
+      <a href="#" class="hover:text-white transition">Home</a>
+      <a href="#" class="hover:text-white transition">About</a>
+      <a href="#" class="hover:text-white transition">Contact</a>
+    </nav> -->
+  </header>
+
+  <!-- Hero Section -->
+  <main class="min-h-screen flex flex-col justify-center items-start px-16 relative z-10">
+
+    <h1 class="text-7xl md:text-9xl font-extrabold animate-slideUp bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+      TikTok
+    </h1>
+
+    <h2 class="mt-4 text-xl text-gray-400 animate-slideUp delay-200 ml-4">
+      IT Assignment Project
+    </h2>
+
+    <div class="mt-8 flex gap-6 animate-slideUp delay-300">
+      <a href="/register"><button class="px-8 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-110 transition transform duration-300 shadow-lg shadow-pink-500/40">
+        Sign Up
+      </button>
+      </a>
+<a href="/login">
+      <button class="px-8 py-3 rounded-full border border-gray-500 hover:bg-white hover:text-black transition duration-300">
+        Login
+      </button>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Spline 3D -->
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.58/build/spline-viewer.js"></script>
+
+  <spline-viewer 
+    class="absolute top-0 right-0 w-1/2 h-full opacity-70"
+    url="https://prod.spline.design/01Gx-ad1A1BIufxP/scene.splinecode">
+  </spline-viewer>
+
+</body>
+</html>

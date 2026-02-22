@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Glass/Neon flash style */
+    .flash {
+      @apply px-6 py-4 rounded-xl backdrop-blur-xl text-white font-semibold shadow-lg;
+      min-width: 220px;
+      border-width: 1px;
+      animation: flashIn 0.5s ease forwards;
+    }
+    .flash-success {
+      background: rgba(34,197,94,0.25);
+      border-color: rgba(34,197,94,0.5);
+      box-shadow: 0 0 15px rgba(34,197,94,0.4);
+    }
+    .flash-error {
+      background: rgba(239,68,68,0.25);
+      border-color: rgba(239,68,68,0.5);
+      box-shadow: 0 0 15px rgba(239,68,68,0.4);
+    }
+
+    @keyframes flashIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes flashOut {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+    .flash-hide {
+      animation: flashOut 0.5s ease forwards;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-black text-white flex items-center justify-center overflow-hidden">
+
+  <!-- Background Glow -->
+  <div class="absolute w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+  <div class="absolute w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30 bottom-10 right-10 animate-pulse"></div>
+
+  <div class="relative z-10 w-full max-w-6xl flex flex-col md:flex-row">
+
+    <!-- LEFT SIDE -->
+    <div class="flex-1 flex flex-col justify-center px-10 md:px-20 mb-10 md:mb-0">
+      <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent mb-6">
+        TikTok
+      </h1>
+
+      <p class="text-gray-400 text-lg">
+        Welcome back. Log in to continue your journey.
+      </p>
+    </div>
+
+    <!-- RIGHT SIDE (FORM) -->
+    <div class="flex-1 flex items-center justify-center">
+
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl w-full max-w-md shadow-2xl">
+
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Login
+        </h2>
+
+        <form action="" method="post" class="space-y-6">
+
+          <input 
+            type="text" 
+            name="username" 
+            placeholder="Username"
+            class="w-full px-4 py-3 rounded-xl bg-black/50 border border-gray-600 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500 transition duration-300"
+          >
+
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password"
+              name="password" 
+              placeholder="Password"
+              class="w-full px-4 py-3 rounded-xl bg-black/50 border border-gray-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-300"
+            >
+
+            <!-- Show/Hide Button -->
+            <button 
+              type="button"
+              onclick="togglePassword()"
+              class="absolute right-3 top-3 text-gray-400 hover:text-white text-sm"
+            >
+              Show
+            </button>
+          </div>
+
+          <button 
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-blue-500 hover:scale-105 transform transition duration-300 font-semibold shadow-lg shadow-pink-500/40"
+          >
+            Login
+          </button>
+
+        </form>
+
+        <p class="text-center text-gray-400 mt-6 text-sm">
+          Don't have an account?
+          <a href="/register" class="text-pink-400 hover:underline">Sign Up</a>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FLASH MESSAGES -->
+  <div class="fixed bottom-6 right-6 space-y-4 z-50">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {% if category=='success' %}flash-success{% else %}flash-error{% endif %} rounded p-3 text-center">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <!-- Auto-hide flashes after 4s -->
+  <script>
+    function togglePassword() {
+      const password = document.getElementById("password");
+      password.type = password.type === "password" ? "text" : "password";
+    }
+
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(f => f.classList.add('flash-hide'));
+    }, 4000);
+  </script>
+
+</body>
+</html>

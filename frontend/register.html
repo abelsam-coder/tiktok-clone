@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikTok Signup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            fadeIn: "fadeIn 0.5s ease-out",
+            slideIn: "slideIn 1.2s ease-out",
+            flashIn: "flashIn 0.5s ease forwards",
+            flashOut: "flashOut 0.5s ease forwards"
+          },
+          keyframes: {
+            fadeIn: {
+              "0%": { opacity: 0 },
+              "100%": { opacity: 1 }
+            },
+            slideIn: {
+              "0%": { opacity: 0, transform: "translateX(-50px)" },
+              "100%": { opacity: 1, transform: "translateX(0)" }
+            },
+            flashIn: {
+              "0%": { opacity: 0, transform: "translateY(20px)" },
+              "100%": { opacity: 1, transform: "translateY(0)" }
+            },
+            flashOut: {
+              "0%": { opacity: 1, transform: "translateY(0)" },
+              "100%": { opacity: 0, transform: "translateY(20px)" }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+
+  
+  <style>
+/* Base flash style */
+.flash {
+  @apply px-6 py-4 rounded-xl backdrop-blur-xl text-white font-semibold shadow-lg;
+  min-width: 220px;
+  animation: flashIn 0.5s ease forwards;
+  border-width: 1px;
+}
+
+/* Success flash */
+.flash-success {
+  background: rgba(34,197,94,0.25); /* green translucent */
+  border-color: rgba(34,197,94,0.5); /* green border */
+  box-shadow: 0 0 15px rgba(34,197,94,0.4);
+}
+
+/* Error flash */
+.flash-error {
+  background: rgba(239,68,68,0.25); /* red translucent */
+  border-color: rgba(239,68,68,0.5); /* red border */
+  box-shadow: 0 0 15px rgba(239,68,68,0.4);
+}
+
+/* Keyframes for animations */
+@keyframes flashIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flashOut {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* Class to hide flash after 4s */
+.flash-hide {
+  animation: flashOut 0.5s ease forwards;
+}
+</style>
+</head>
+
+<body class="h-full bg-black text-white overflow-hidden">
+
+  <!-- Background Glow -->
+  <div class="absolute w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+  <div class="absolute w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30 bottom-10 right-10 animate-pulse"></div>
+
+  <div class="relative z-10 h-full flex flex-col md:flex-row">
+
+    <!-- LEFT SIDE -->
+    <div class="flex-1 flex flex-col justify-center px-10 md:px-20 animate-slideIn">
+      <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent mb-6">
+        TikTok
+      </h1>
+
+      <p class="text-gray-400 mb-10 text-lg">
+        Join the fastest growing short-video platform.
+      </p>
+
+      <div class="space-y-4 text-lg">
+        <div class="flex items-center gap-3">
+          <span class="text-pink-500">✔</span> Fast Performance
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-blue-500">✔</span> Secure Platform
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-purple-500">✔</span> Vast Community
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE (FORM) -->
+    <div class="flex-1 flex items-center justify-center p-10 animate-fadeIn">
+
+      <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-10 rounded-3xl w-full max-w-md shadow-2xl">
+
+        <h2 class="text-3xl font-bold text-center mb-8">
+          Create Account
+        </h2>
+
+        <form action="" method="post" class="space-y-6">
+
+          <input 
+            type="text" 
+            name="username" 
+            placeholder="Username"
+            class="w-full px-4 py-3 rounded-xl bg-black/50 border border-gray-600 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500 transition duration-300"
+          >
+
+          <input 
+            type="email" 
+            name="email" 
+            placeholder="Email"
+            class="w-full px-4 py-3 rounded-xl bg-black/50 border border-gray-600 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-300"
+          >
+
+          <input 
+            type="password" 
+            name="password" 
+            placeholder="Password"
+            class="w-full px-4 py-3 rounded-xl bg-black/50 border border-gray-600 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500 transition duration-300"
+          >
+
+          <button 
+            type="submit"
+            class="w-full py-3 rounded-xl bg-gradient-to-r from-pink-500 to-blue-500 hover:scale-105 transform transition duration-300 font-semibold shadow-lg shadow-pink-500/40"
+          >
+            Sign Up
+          </button>
+
+        </form>
+
+        <p class="text-center text-gray-400 mt-6 text-sm">
+          Already have an account?
+          <a href="login" class="text-pink-400 hover:underline">Login</a>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+
+ <!-- FLASH MESSAGES -->
+<div class="fixed bottom-6 right-6 space-y-4 z-50">
+  <!-- FLASH MESSAGES -->
+<div class="fixed bottom-6 right-6 space-y-4 z-50">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash 
+          {% if category == 'success' %}flash-success{% else %}flash-error{% endif %} p-3 text-center rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+</div>
+
+  <script>
+   
+  </script>
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('.flash').forEach(f => f.classList.add('flash-hide'));
+  }, 4000);
+</script>
+</body>
+</html>

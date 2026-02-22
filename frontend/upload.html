@@ -1,0 +1,222 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  main, header {
+    padding-left: 16rem; /* leave space for fixed aside */
+  }
+  input {
+    width: 20rem;
+  }
+  .posts {
+    margin-left: 0; /* main already has padding */
+  }
+  .post-card {
+    width: 50%;
+    margin-left: 19em;
+  }
+  .loading {
+ --speed-of-animation: 0.9s;
+ --gap: 6px;
+ --first-color: #4c86f9;
+ --second-color: #49a84c;
+ --third-color: #f6bb02;
+ --fourth-color: #f6bb02;
+ --fifth-color: #2196f3;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100px;
+ gap: 6px;
+ height: 100px;
+}
+
+.loading span {
+ width: 4px;
+ height: 50px;
+ background: var(--first-color);
+ animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+
+.loading span:nth-child(2) {
+ background: var(--second-color);
+ animation-delay: -0.8s;
+}
+
+.loading span:nth-child(3) {
+ background: var(--third-color);
+ animation-delay: -0.7s;
+}
+
+.loading span:nth-child(4) {
+ background: var(--fourth-color);
+ animation-delay: -0.6s;
+}
+
+.loading span:nth-child(5) {
+ background: var(--fifth-color);
+ animation-delay: -0.5s;
+}
+
+@keyframes scale {
+ 0%, 40%, 100% {
+  transform: scaleY(0.05);
+ }
+
+ 20% {
+  transform: scaleY(1);
+ }
+}
+.loading {
+  display: none;           /* hide by default */
+  position: absolute;      /* position relative to nearest positioned ancestor or body */
+  top: 50%;       
+  z-index: 2;         /* vertical center */
+  left: 50%;               /* horizontal center */
+  transform: translate(-50%, -50%); /* offset by half of its own width and height */
+}
+</style>
+<script>
+  tailwind.config = { darkMode: 'class' }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>TikTok System</title>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden transition duration-300">
+
+<!-- Background Glow -->
+<div class="absolute w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+<div class="absolute w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30 bottom-10 right-10 animate-pulse"></div>
+
+<div class="relative z-10 flex min-h-screen">
+
+ <!-- SIDEBAR -->
+ <aside class="fixed top-0 left-0 h-full w-64 bg-white/10 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col justify-between shadow-lg">
+  
+  <!-- Logo / Brand -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
+      TikTok
+    </h1>
+  </div>
+<nav class="flex flex-col gap-4">
+    <a href="/dashboard/home" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-house text-xl"></i>
+      <span class="font-semibold">Home</span>
+    </a>
+    <a href="/dashboard/profile" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-user text-xl"></i>
+      <span class="font-semibold">Profile</span>
+    </a>
+    <!-- <a href="/notifications" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-bell text-xl"></i>
+      <span class="font-semibold">Notifications</span>
+    </a>
+    <a href="/chat" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-comments text-xl"></i>
+      <span class="font-semibold">Chat</span>
+    </a> -->
+    <a href="/dashboard/upload" class="flex items-center gap-4 p-3 rounded-xl hover:bg-gradient-to-r from-pink-500 to-blue-500 transition text-white">
+      <i class="fa-solid fa-plus text-xl"></i>
+      <span class="font-semibold">Create</span>
+    </a>
+    <a href="/dashboard/logout" class="flex items-center gap-4 p-3 rounded-xl hover:bg-red-500/30 transition text-red-500 font-semibold">
+      <i class="fa-solid fa-right-from-bracket text-xl"></i>
+      <span>Logout</span>
+    </a>
+  </nav>
+  <!-- Optional Bottom Info -->
+  <div class="mt-auto text-gray-400 text-sm">
+    © 2026 TikTok Clone
+  </div>
+</aside>
+<main class="flex-1 p-6 relative">
+  <form method="POST" enctype="multipart/form-data" action="/upload">
+    <input type="file" name="file" required>
+    <button type="submit" onclick="showLoader(event)">Upload</button>
+  </form>
+
+  <!-- Loader Overlay -->
+  <div class="loading-overlay hidden">
+    <div class="loading">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</main>
+
+<style>
+/* Loader overlay covering entire main content */
+.loading-overlay {
+  position: absolute;
+  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.5); /* dark translucent overlay */
+  backdrop-filter: blur(5px); /* blur content behind */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* Spinner container */
+.loading {
+  --speed-of-animation: 0.9s;
+  --gap: 6px;
+  --first-color: #4c86f9;
+  --second-color: #49a84c;
+  --third-color: #f6bb02;
+  --fourth-color: #f6bb02;
+  --fifth-color: #2196f3;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100px;
+  gap: var(--gap);
+  height: 100px;
+}
+
+.loading span {
+  width: 8px;
+  height: 50px;
+  background: var(--first-color);
+  animation: scale var(--speed-of-animation) ease-in-out infinite;
+}
+
+.loading span:nth-child(2) { background: var(--second-color); animation-delay: -0.8s; }
+.loading span:nth-child(3) { background: var(--third-color); animation-delay: -0.7s; }
+.loading span:nth-child(4) { background: var(--fourth-color); animation-delay: -0.6s; }
+.loading span:nth-child(5) { background: var(--fifth-color); animation-delay: -0.5s; }
+
+@keyframes scale {
+  0%, 40%, 100% { transform: scaleY(0.05); }
+  20% { transform: scaleY(1); }
+}
+</style>
+
+<script>
+function showLoader(event) {
+  event.preventDefault(); // prevent immediate form submission
+  const overlay = document.querySelector('.loading-overlay');
+  overlay.classList.remove('hidden');
+
+  // simulate upload delay or proceed with form submission
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    // Uncomment this if you want the form to submit after loader
+    // event.target.closest('form').submit();
+  }, 3000); // adjust as needed
+}
+</script>
+</body>
+</html>

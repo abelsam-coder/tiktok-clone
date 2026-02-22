@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  main, header {
+    padding-left: 16rem; /* leave space for fixed aside */
+  }
+  input {
+    width: 20rem;
+  }
+  .posts {
+    margin-left: 0; /* main already has padding */
+  }
+  .post-card {
+    width: 50%;
+    margin-left: 19em;
+  }
+</style>
+<script>
+  tailwind.config = { darkMode: 'class' }
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<title>TikTok System</title>
+</head>
+
+<body class="bg-black text-white overflow-x-hidden transition duration-300">
+
+<!-- Background Glow -->
+<div class="absolute w-96 h-96 bg-pink-500 rounded-full blur-3xl opacity-30 top-10 left-10 animate-pulse"></div>
+<div class="absolute w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-30 bottom-10 right-10 animate-pulse"></div>
+
+<div class="relative z-10 flex min-h-screen">
+
+ <!-- SIDEBAR -->
+ <aside class="fixed top-0 left-0 h-full w-64 bg-white/10 backdrop-blur-xl border-r border-white/20 p-6 flex flex-col justify-between shadow-lg">
+  
+  <!-- Logo / Brand -->
+  <div class="mb-8">
+    <h1 class="text-2xl font-extrabold bg-gradient-to-r from-pink-500 to-blue-500 bg-clip-text text-transparent">
+      TikTok
+    </h1>
+  </div>
+
+  <nav class="flex flex-col gap-4">
+    <a href="/dashboard/home" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-house text-xl"></i>
+      <span class="font-semibold">Home</span>
+    </a>
+    <a href="/dashboard/profile" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-user text-xl"></i>
+      <span class="font-semibold">Profile</span>
+    </a>
+    <!-- <a href="/notifications" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-bell text-xl"></i>
+      <span class="font-semibold">Notifications</span>
+    </a>
+    <a href="/chat" class="flex items-center gap-4 p-3 rounded-xl hover:bg-white/20 transition">
+      <i class="fa-solid fa-comments text-xl"></i>
+      <span class="font-semibold">Chat</span>
+    </a> -->
+    <a href="/dashboard/upload" class="flex items-center gap-4 p-3 rounded-xl hover:bg-gradient-to-r from-pink-500 to-blue-500 transition text-white">
+      <i class="fa-solid fa-plus text-xl"></i>
+      <span class="font-semibold">Create</span>
+    </a>
+    <a href="/dashboard/logout" class="flex items-center gap-4 p-3 rounded-xl hover:bg-red-500/30 transition text-red-500 font-semibold">
+      <i class="fa-solid fa-right-from-bracket text-xl"></i>
+      <span>Logout</span>
+    </a>
+  </nav>
+
+  <!-- Optional Bottom Info -->
+  <div class="mt-auto text-gray-400 text-sm">
+    © 2026 TikTok Clone
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="flex-1 p-6">
+  <header class="flex justify-between items-center mb-6">
+    <!-- Search -->
+    <form action="/search" method="get" class="flex">
+      <input type="text" name="search" placeholder="Search..." 
+             class="px-4 py-2 rounded-xl bg-black/50 border border-white/20 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-500 transition duration-300">
+      <button type="submit" class="ml-2 px-4 py-2 bg-pink-500 rounded-xl hover:bg-pink-600 transition">Search</button>
+    </form>
+
+    <!-- Profile Info -->
+    <div class="flex items-center gap-4 p-2 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 transition">
+      <img src="{{profile}}" alt="Profile Picture" class="w-16 h-16 rounded-full border-2 border-pink-500 object-cover">
+      <div class="flex flex-col">
+        <h2 class="font-semibold text-lg">{{username}}</h2>
+        <p class="text-gray-400 text-sm">{{email}}</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Posts -->
+  <div class="posts flex flex-col gap-6">
+    {% for post in posts %}
+    <div class=" post-card bg-white/5 backdrop-blur-lg border border-white/20 rounded-2xl overflow-hidden shadow-lg hover:scale-105 transform transition duration-300">
+      <a href="/user/{{post.username}}">
+        <!-- USER INFO -->
+        <div class="flex items-center gap-3 p-4">
+          
+          <img src="{{ post.profile }}" alt="Profile" class="w-12 h-12 rounded-full border-2 border-pink-500 object-cover">
+          <div>
+            <h2 class="text-white font-semibold">{{ post.username }}</h2>
+            <p class="text-gray-400 text-sm">{{ post.email }}</p>
+          </div>
+        </div>
+      </a>
+      <!-- POST IMAGE -->
+      {% set ext = post.post_img.split('.')[-1].lower() %}
+{% if ext in ['mp4', 'webm', 'ogg'] %}
+  <video controls class="w-full max-h-64 rounded-xl object-cover">
+    <source src="{{ post.post_img }}" type="video/{{ ext }}">
+    Your browser does not support the video tag.
+  </video>
+{% else %}
+  <img src="{{ post.post_img }}" alt="Post Image" class="w-full max-h-64 rounded-xl object-cover">
+{% endif %}
+      <!-- POST CONTENT -->
+      <div class="p-4 space-y-2">
+        <h3 class="text-lg font-bold text-white">{{ post.title }}</h3>
+        <p class="text-gray-300 text-sm">{{ post.caption }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+
+</body>
+</html>
